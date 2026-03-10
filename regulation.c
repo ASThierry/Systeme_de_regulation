@@ -17,7 +17,6 @@
         float proportional = tabT[nT-1]-consigne;
 
         //calcul de la partie intégrale
-
         float integral=0;
 
         for (int i=0; i < nT-2 ; i++){
@@ -25,13 +24,12 @@
         }
 
         //calcul de la partie dérivée
-        float derivative = integral/((nT-1)*100);
+        float derivative = ((tabT[nT-1]-consigne)-(tabT[nT-2]-consigne))/100);
 
         //calcul du PID
         float pid= kp * proportional + ki * integral + kd * derivative;
 
         // conversion en pourcentage
-
         float cmd= pid*100/(40);
         return cmd;
     }
