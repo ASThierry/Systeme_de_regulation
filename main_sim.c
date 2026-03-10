@@ -28,17 +28,17 @@ int main(){
         temperature = simCalc(cmd,monSimulateur); // calcul de la température grâce à la commande en % du chauffage via simCalc
         visualisationC(cmd);
         visualisationT(temperature);
-        float consigne= consigne(10);
+        float consi= consigne(10.00);
 
         for (int i =0; i<nT-1; i++){
             tabT[i]=tabT[i+1];
         }
 
         tabT[nT-1]= temperature.interieure;
-        regulationTest(2,consigne,tabT,nT);
+        regulationTest(2,consi,tabT,nT);
 		usleep(40000);
 
-        if (consigne==5){
+        if (consi==5){
             break;
         }
 	}
