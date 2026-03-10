@@ -4,12 +4,12 @@
 #include<unistd.h>
 
 #include "simulateur.h"
-/**
+
 #include "consigne.h"
 #include "regulation.h"
 #include "visualisationC.h"
 #include "visualisationT.h"
-**/
+
 
 // Voir le fichier trace.txt pour comprendre la baisse de température
 
@@ -20,16 +20,30 @@ int main(){
 	temperature.interieure = 15.0; // initialisation de la température intérieure à 15.0°C
 
     float cmd = 0; // initialisation de la commande du chauffage à 0%
-	struct simParam_s*  monSimulateur = simConstruct(temperature); // creation du simulateur, puissance intialisé
-    // programme qui s'arrete quand la température intérieure s'approche de la température extérieure
-	while(temperature.interieure - temperature.exterieure >= 0.5 ){
-        temperature = simCalc(cmd,monSimulateur); // calcule de la température grâce à la commande en % du chauffage via simCalc
-		printf("int %f, ext %f\n", temperature.exterieure, temperature.interieure);
+	struct simParam_s*  monSimulateur = simConstruct(temperature); // creation du simulateur, puissance intialisée
+    int nT = 50;
+    float tabT[nT];
+
+	while(1){
+        temperature = simCalc(cmd,monSimulateur); // calcul de la température grâce à la commande en % du chauffage via simCalc
+        visualisationC(cmd);
+        visualisationT(temperature);
+        float consigne= consigne(monSimulateur);
+
+        for (int i =0; i<nT-1; i++){
+            tabT[i]=tabT[i+1];
+        }
+
+        tabT[nT-1]= temperature.interieure;
+        regulationTest(2,consigne,tabT,nT);
 		usleep(40000);
+
+        if (consigne==5){
+            break;
+        }
 	}
-	
-	printf("Il ne reste plus qu'a allumer le chauffage !\n");
-	
+
+	cmd=0;
 	simDestruct(monSimulateur); // destruction de simulateur
 	return EXIT_SUCCESS;
 }
