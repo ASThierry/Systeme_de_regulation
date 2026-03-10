@@ -14,4 +14,4 @@ regulation.o: regulation.c
 		gcc -c $< -o $@
 
 clean:
-		rm –f *.o executable
+		rm -f *.o executable .verrouData .verrouConsigne
