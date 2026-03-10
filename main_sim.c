@@ -28,7 +28,7 @@ int main(){
         temperature = simCalc(cmd,monSimulateur); // calcul de la température grâce à la commande en % du chauffage via simCalc
         visualisationC(cmd);
         visualisationT(temperature);
-        float consigne= consigne(monSimulateur);
+        float consigne= consigne(10);
 
         for (int i =0; i<nT-1; i++){
             tabT[i]=tabT[i+1];
