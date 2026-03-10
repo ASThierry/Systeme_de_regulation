@@ -16,7 +16,7 @@
 int main(){
 
 	temp_t temperature; // initialisation de la température
-	temperature.exterieure = 10.0; // initialisation de la température extérieure à 14.0°C
+	temperature.exterieure = 14.0; // initialisation de la température extérieure à 14.0°C
 	temperature.interieure = 15.0; // initialisation de la température intérieure à 15.0°C
 
     float cmd = 0; // initialisation de la commande du chauffage à 0%
@@ -24,18 +24,34 @@ int main(){
     int nT = 50;
     float tabT[nT];
 
+    float consi= 40;
+    float consi_avant= 40;
+
+    int i=0;
+
 	while(1){
         temperature = simCalc(cmd,monSimulateur); // calcul de la température grâce à la commande en % du chauffage via simCalc
-        visualisationC(cmd);
-        visualisationT(temperature);
-        float consi= consigne(10.00);
 
-        for (int i =0; i<nT-1; i++){
-            tabT[i]=tabT[i+1];
+        consi_avant= consi;
+        consi= consigne(consi_avant);
+
+        if (i<nT){
+            tabT[i]= temperature.interieure;
+            i++;
+        }
+        else{
+            for (i=0; i<nT-1; i++){
+                tabT[i]= tabT[i+1];
+            }
+            tabT[i]= temperature.interieure;
         }
 
-        tabT[nT-1]= temperature.interieure;
-        regulationTest(2,consi,tabT,nT);
+
+        visualisationC(cmd);
+        visualisationT(temperature);
+
+        regulationTest(1,consi,tabT,nT);
+
 		usleep(40000);
 
         if (consi==5){
