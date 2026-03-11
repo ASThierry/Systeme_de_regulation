@@ -4,6 +4,9 @@
     #include "define.h"
 
     float regulationToutOuRien(float consigne,float* tabT, int nT){
+        if(nT < 1){
+            return 0;
+        }
         if (consigne > tabT[nT-1]){
             return 50;
         }
@@ -13,7 +16,10 @@
     }
 
     float regulationPID(float consigne,float* tabT, int nT, float kp, float ki, float kd){
-
+        if (nT < 2)
+        {
+            return 0;
+        }
         //calcul de la différence entre la consigne et la dernière valeur mesurée
         float proportional = consigne - tabT[nT-1];
 
@@ -30,8 +36,14 @@
         //calcul du PID
         float pid= kp * proportional + ki * integral + kd * derivative;
 
-        // conversion en pourcentage
+        // conversion en pourcentage 0 - 100%
         float cmd= pid;
+        if(cmd < 0.0){
+            cmd = 0.0;
+        }
+        if(cmd>100.0){
+            cmd = 100.0;
+        }
         return cmd;
     }
 
