@@ -2,7 +2,7 @@
 
 void visualisationT(temp_t myTemp)
 {
-   char temoin[10];
+   char temoin[20];
    FILE *inputFile;
    FILE *verrouConsigne;
    verrouConsigne = fopen(".verrouData","r");
@@ -14,11 +14,17 @@ void visualisationT(temp_t myTemp)
     }else
     {
         verrouConsigne = fopen(".verrouData","w");//Création de fichier .        
+        if (verrouConsigne != NULL)// Présence du verrou
+        {
         fclose( verrouConsigne );
+        }
 
         inputFile = fopen("data.txt", "r");
-        fscanf(inputFile,"%s",temoin);// Lecture du temoin
-        fclose(inputFile);
+        if(inputFile!=NULL){// Verrification de l'existance du fichier data 
+            fscanf(inputFile,"%s",temoin);// Lecture du temoin
+            fclose(inputFile);
+        }
+        
 
         inputFile = fopen("data.txt", "w");
         if ( inputFile == NULL) { // teste l'ouverture

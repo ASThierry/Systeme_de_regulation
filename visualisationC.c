@@ -11,13 +11,17 @@ void visualisationC(float puissance_f){
     float tint=0.0;
     verrouData = fopen(".verrouData","r");
     
-    if (verrouData != NULL){// Présence du verrou
+    if (verrouData != NULL){// Présence du verrouData
         fclose(verrouData);
         return;
     }
     // Création d'un vérrou
     verrouData = fopen(".verrouData","w");
-    fclose( verrouData );
+    if(verrouData!=NULL){
+        fclose( verrouData );
+    }
+    
+    // lecture de donnée
     data = fopen("data.txt","r");
       if (data !=NULL)
       {
@@ -46,7 +50,7 @@ void visualisationC(float puissance_f){
                 
             }
             fprintf(data,"%.2f\n",text);
-            fprintf(data,"%.2f",tint);
+            fprintf(data,"%.2f\n",tint);
             fclose(data);
         }
         
