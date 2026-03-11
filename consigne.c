@@ -21,7 +21,10 @@ float thermostat_f=0;
             }
             fscanf(inputFile,"%f", &thermostat_f);// Lecture de la consigne dans le fichier consigne.txt
             fclose( inputFile ); // ferme le fichier
-            fclose( verrouConsigne );
+            if(verrouConsigne!=NULL){
+              fclose( verrouConsigne );
+            }
+            
       }
    
 
