@@ -30,6 +30,8 @@ int main() {
 
     int i = 0;
     int k=0;
+    FT_STATUS ftStatus;
+
     ftStatus = FT_Open(0, &ftHandle);
 
     if (ftStatus != FT_OK){
@@ -37,7 +39,7 @@ int main() {
     }
     else {
         while (1) {
-            temperature = releve(ftHandle);
+            temperature = releve(&ftHandle);
 
             consi_avant = consi;
             consi = consigne(consi_avant);
@@ -58,7 +60,7 @@ int main() {
             }
 
             cmd = regulationTest(1, consi, tabT, nT);
-            commande(ftHandle,cmd);
+            commande(cmd,&ftHandle);
 
             visualisationC(cmd);
             visualisationT(temperature);
