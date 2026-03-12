@@ -13,8 +13,8 @@ temp_t releve(FT_HANDLE ftHandle) {
     ftStatus = FT_Read(ftHandle, RxBuffer, 6, &BytesReceived); 
     printf("bytes recieve: %d\n",BytesReceived);
     if (ftStatus == FT_OK ) { 
-        float tint = (float)(((RxBuffer[0] & 0x0F) << 8) | ((RxBuffer[1] & 0x0F) << 4) | (RxBuffer[2] & 0x0F));
-        float text = (float)(((RxBuffer[3] & 0x0F) << 8) | ((RxBuffer[4] & 0x0F) << 4) | (RxBuffer[5] & 0x0F));
+        float text = (float)(((RxBuffer[0] & 0x0F) << 8) | ((RxBuffer[1] & 0x0F) << 4) | (RxBuffer[2] & 0x0F));
+        float tint = (float)(((RxBuffer[3] & 0x0F) << 8) | ((RxBuffer[4] & 0x0F) << 4) | (RxBuffer[5] & 0x0F));
         temperature.interieure = -39.64 + 0.04 * tint;
         temperature.exterieure = -39.64 + 0.04 * text;
     }
