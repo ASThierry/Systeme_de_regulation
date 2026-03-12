@@ -30,40 +30,46 @@ int main() {
 
     int i = 0;
     int k=0;
+    ftStatus = FT_Open(0, &ftHandle);
 
-    while (1) {
-        temperature = releve(fthandle);
-
-        consi_avant = consi;
-        consi = consigne(consi_avant);
-
-        if (consi == 5) {
-            cmd=0;
-            break;
-        }
-
-        if (i < nT - 1) {
-            tabT[i] = temperature.interieure;
-            i++;
-        } else {
-            for (int j = 0; j < nT - 1; j++) {
-                tabT[j] = tabT[j + 1];
-            }
-            tabT[nT - 1] = temperature.interieure;
-        }
-
-        cmd = regulationTest(1, consi, tabT, nT);
-        commande(FT_HANDLE ftHandle,cmd);
-
-        visualisationC(cmd);
-        visualisationT(temperature);
-
-        usleep(40000);
-        k++;
-        printf("étape: %d; puissance: %f; consigne: %f\n",k,cmd, consi);
-
+    if (ftStatus != FT_OK){
+        return ftStatus;
     }
+    else {
+        while (1) {
+            temperature = releve(ftHandle);
 
-    return EXIT_SUCCESS;
+            consi_avant = consi;
+            consi = consigne(consi_avant);
 
+            if (consi == 5) {
+                cmd=0;
+                break;
+            }
+
+            if (i < nT - 1) {
+                tabT[i] = temperature.interieure;
+                i++;
+            } else {
+                for (int j = 0; j < nT - 1; j++) {
+                    tabT[j] = tabT[j + 1];
+                }
+                tabT[nT - 1] = temperature.interieure;
+            }
+
+            cmd = regulationTest(1, consi, tabT, nT);
+            commande(ftHandle,cmd);
+
+            visualisationC(cmd);
+            visualisationT(temperature);
+
+            usleep(40000);
+            k++;
+            printf("étape: %d; puissance: %f; consigne: %f\n",k,cmd, consi);
+
+        }
+        FT_Close(&ftHandle);
+
+        return EXIT_SUCCESS;
+    }
 }
