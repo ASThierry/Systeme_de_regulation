@@ -1,2 +1,3 @@
 #include "ftd2xx.h"
-void commande( float puis);
+#include <stdio.h>
+void commande( float puis,FT_HANDLE ftHandle);

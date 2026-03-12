@@ -1,3 +1,4 @@
 #include "define.h"
 #include "ftd2xx.h"
-temp_t releve();
+#include <stdio.h>
+temp_t releve(FT_HANDLE ftHandle);

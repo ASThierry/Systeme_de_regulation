@@ -1,5 +1,5 @@
     #include <stdio.h>
-	 #include <stdlib.h>
+	#include <stdlib.h>
     #include "regulation.h"
     #include "define.h"
 
@@ -16,10 +16,7 @@
     }
 
     float regulationPID(float consigne,float* tabT, int nT, float kp, float ki, float kd){
-        if (nT < 2)
-        {
-            return 0;
-        }
+        
         //calcul de la différence entre la consigne et la dernière valeur mesurée
         float proportional = consigne - tabT[nT-1];
 
