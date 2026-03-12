@@ -25,21 +25,28 @@ int main() {
     int nT = 50;
     float tabT[50];
     FT_HANDLE ftHandle;
+    FT_STATUS ftStatus;
     float consi = 10;
     float consi_avant = 10;
 
     int i = 0;
     int k=0;
-    FT_STATUS ftStatus;
+   
 
     ftStatus = FT_Open(0, &ftHandle);
 
+    FT_SetBaudRate(ftHandle, 115200); 
+    FT_SetDataCharacteristics(ftHandle, FT_BITS_8, FT_STOP_BITS_1, FT_PARITY_NONE);
+  
+   
+
     if (ftStatus != FT_OK){
+        printf("Pas de connection USB detecter.");
         return ftStatus;
     }
     else {
         while (1) {
-            temperature = releve(&ftHandle);
+            temperature = releve(ftHandle);
 
             consi_avant = consi;
             consi = consigne(consi_avant);
@@ -60,14 +67,15 @@ int main() {
             }
 
             cmd = regulationTest(1, consi, tabT, nT);
-            commande(cmd,&ftHandle);
+            commande(cmd,ftHandle);
 
             visualisationC(cmd);
             visualisationT(temperature);
 
             usleep(40000);
             k++;
-            printf("étape: %d; puissance: %f; consigne: %f\n",k,cmd, consi);
+            printf("tint: %f; text: %f; consigne: %f\n",temperature.interieure,temperature.exterieure, consi);
+            
 
         }
         FT_Close(&ftHandle);
