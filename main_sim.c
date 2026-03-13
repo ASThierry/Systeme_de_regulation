@@ -58,7 +58,7 @@ int main() {
         tabT[nT - 1] = temperature.interieure;
     }
         //effectue la régulation de la puissance avec la méthode de Ziegler-Nichols
-        cmd = regulationPID(consi,tabT,nT,0.6*1000,2/3*DELTAT,0.125*(3*DELTAT));
+        cmd = regulationTest(2,consi,tabT,nT);
 
         //écrit les températures et le témions dans data.txt
         visualisationC(cmd);
