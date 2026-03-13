@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-#include<unistd.h>
+#include <windows.h>
 
 #include "releve.h"
 #include "commande.h"
@@ -86,7 +85,7 @@ int main() {
             visualisationC(cmd);
             visualisationT(temperature);
 
-            usleep(40000);
+            sleep(40);
             k++;
             printf("tint: %f; text: %f; consigne: %f\n",temperature.interieure,temperature.exterieure, consi);
             
